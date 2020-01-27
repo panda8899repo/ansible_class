@@ -1,0 +1,15 @@
+---
+- hosts: all
+  tasks: 
+    - block:
+        - name: user creation under block
+          command: adduserrr jjjjj
+
+      rescue: 
+        - name: user creation under rescue
+          shell: useradd ramakanta124 
+
+      always: 
+        - name: 
+          debug:
+            msg: "Both block and rescue failed ha ha ha ..."

@@ -1,0 +1,36 @@
+---
+- hosts: all
+  become: yes
+  remote_user: ansible
+  tasks: 
+    - block: 
+        - name: This is 1st task
+          user: 
+            name: hari
+            state: present
+        - name: creating file
+          copy: 
+            content: "Hello India"
+            dest: /tmp/tmp.txt 
+        - name: Creating directory
+          file: 
+            path: /tmp/tmp/tmp/tmp 
+            state: directory
+            recurse: yes
+            force: yes 
+            mode: 777
+            owner: root
+            group: root
+
+    - block: 
+        - name: checking url link available or not 
+          uri: 
+            url: http://repo.mysql.com/mysql-community-release-fc19-5.noarch.rpm
+          register: V_out
+          ignore_errors: yes
+
+        - name: checking link available or not
+          debug: 
+            var: V_out 
+
+

@@ -1,0 +1,41 @@
+---
+- hosts: all
+  tasks: 
+    - name: Package installation ..
+      yum: 
+        name: httpd-2.4.6 
+        state: installed
+
+    - name: starting apache web service
+      service: 
+        name: httpd
+        state: started 
+        enabled: yes 
+    - name: using jinja2 template 
+      template: 
+        src: templates/httpd_jinja.j2
+        dest: /etc/httpd/conf/httpd.conf 
+    - name: creating index file
+      copy: 
+        content: "<h1 style='color:red'>HI KALIA</h1> \n"
+        dest: /var/www/html/index.html
+
+    - name: installing firewall 
+      yum: 
+        name: firewalld
+        state: latest
+
+    - name: starting firewalld service
+      service: 
+        name: firewalld
+        state: started 
+        enabled: true 
+
+
+    - name: Adding firewall rule 
+      firewalld: 
+        service: http 
+        state: enabled
+        permanent: yes
+        immediate: yes
+

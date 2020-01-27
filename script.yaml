@@ -1,0 +1,19 @@
+---
+- hosts: all 
+  become: true
+  remote_user: ansible
+  gather_facts: no 
+  tasks: 
+    - copy: src=./file.txt dest=/home/ansible 
+    - name: copy script file to remote machine
+      copy: src=./scerpt.sh dest=/home/ansible
+    
+    - name: running script 
+      script: scerpt.sh 
+    - file: 
+       path: "{{item}}"
+       state: absent 
+      loop:
+         - /home/ansible/scerpt.sh
+         - /home/ansible/file.txt 
+   

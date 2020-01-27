@@ -1,0 +1,21 @@
+---
+- hosts: all
+  become: true
+  remote_user: ansible
+  vars:
+    USER: 
+     - RAMA
+     - KAMA
+     - GAMA
+  tasks:
+    - name: Message showing
+      debug: 
+        msg: "{{ USER }}"
+    - name: User creation
+      user: 
+        name: "{{ item }}"
+        state: present 
+        groups: wheel
+        append: yes 
+      with_items: 
+        - "{{ USER }}"

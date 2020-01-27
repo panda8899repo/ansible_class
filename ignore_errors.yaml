@@ -1,0 +1,15 @@
+---
+- hosts: all
+  become: yes
+  remote_user: ansible
+  tasks: 
+    - name: installaing package 
+      yum: 
+        name: magura
+        state: latest
+      ignore_errors: yes 
+    - name: installaing another package
+      yum: 
+        name: vsftpd
+        state: latest 
+

@@ -1,0 +1,27 @@
+---
+- hosts: all
+  become: true
+  remote_user: ansible 
+  tasks: 
+    - name: shows fqdn 
+      debug: 
+        msg: "Server FQDN is {{ ansible_fqdn }}"
+    - name: shows cpu cores
+      debug: 
+        msg: "Server cpu cores is {{ ansible_processor_cores }}"
+    - name: shows os type
+      debug: 
+        msg: "Server os type  {{ ansible_os_family }}"
+    - name: shows memory size
+      debug: 
+        msg: "Server memory size is {{ ansible_memtotal_mb }}"
+    - name: shows memory size
+      debug: 
+        msg: "Server ipv4 address is {{ ansible_default_ipv4.address }}"
+
+    - name: storing system facts in a file 
+      lineinfile: 
+        line: "{{ ansible_fqdn }} {{ ansible_processor_cores }} {{ ansible_os_family }} {{ ansible_memtotal_mb }} {{ ansible_default_ipv4.address }} \n" 
+        dest: /tmp/node_details.txt 
+        create: true
+      delegate_to: localhost

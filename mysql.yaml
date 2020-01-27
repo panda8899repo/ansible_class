@@ -1,0 +1,49 @@
+---
+- name: Installing  mysql 
+  hosts: all
+  become: true
+  remote_user: ansible
+  tasks: 
+    - name: Installing packages 
+      yum: 
+        name: 
+          - wget 
+          - MySQL-python
+          - php
+        state: present 
+
+    - name: download mysql rpm 
+      get_url: 
+        url: http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm 
+        dest: /tmp/
+        force: yes 
+    - name: install mysql-server package 
+      yum: 
+        name: /tmp/mysql-community-release-el7-5.noarch.rpm
+        state: present
+    - name: starting mysql service
+      service: 
+        name: mysql
+        state: started
+        enabled: yes
+    - name: Creating database 
+      mysql_db: 
+        name: marandi 
+        state: present
+    - name: Creating user
+      mysql_user: 
+        name: shrini
+        state: present
+        password: redhat
+        priv: marandi.*:ALL
+        host: localhost
+    - name: Adding Rule in firewall
+      firewalld: 
+        port: 3306/tcp
+        state: enabled
+        permanent: yes
+        immediate: yes 
+
+      
+
+

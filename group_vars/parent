@@ -1,0 +1,7 @@
+---
+PKG:
+ - lftp
+ - ftp
+ - httpd
+ - vsftpd
+

@@ -1,0 +1,15 @@
+[dev]
+node1
+node2
+
+[prod]
+master
+node1
+node2
+
+[parent:children]
+dev
+prod
+
+[parent:vars]
+USER="aaa","bbb","ccc"

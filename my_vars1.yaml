@@ -1,0 +1,10 @@
+---
+- hosts: all
+  become: true
+  remote_user: ansible
+  tasks: 
+    - yum: 
+        name: "{{ item }}"
+        state: latest
+      with_items: 
+        - "{{ PKG }}"
