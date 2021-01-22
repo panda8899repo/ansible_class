@@ -1,0 +1,8 @@
+---
+-  hosts: 18.224.65.19
+   become: true
+   remote_user: root
+   tasks:
+     - name: print message
+       debug:
+         msg: Hello pradeep this is from ansible tower
